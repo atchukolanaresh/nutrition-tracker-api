@@ -167,7 +167,12 @@ app.get('/user/foods/:userId/:date',verifyToken,async (req,res)=>{
         let date = formattedDate.toISOString();
 
         let data =await trackingModel.find({userId:userId,date:date}).populate("userId").populate('foodId')
-        res.send(data);
+        if(data.userId==null){
+            res.send("no user")
+        }
+        else{
+            res.send(data)
+        }
 
     }
     catch(err)
@@ -176,6 +181,9 @@ app.get('/user/foods/:userId/:date',verifyToken,async (req,res)=>{
         res.status(500).send({message:"Some Problem in getting the food"})
     }
 })
+
+
+
 
 
 
